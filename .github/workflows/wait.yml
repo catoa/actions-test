@@ -12,7 +12,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
           check-name: "Hello World"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ github.token }}
           wait-interval: 10
 
       - name: Yay
