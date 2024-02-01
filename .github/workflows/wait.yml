@@ -6,13 +6,14 @@ on:
 jobs:
   wait:
     runs-on: ubuntu-latest
+    permissions: read-all
     steps:
       - name: Wait for tests to succeed
         uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
           check-name: "Hello World"
-          repo-token: ${{ secrets.WAIT_FOR_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
       - name: Yay
