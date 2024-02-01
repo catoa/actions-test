@@ -3,6 +3,10 @@ on:
     branches:
       - main
 
+permissions:
+  checks: read
+  contents: read
+
 jobs:
   run-stuff:
     runs-on: ubuntu-latest
