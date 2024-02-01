@@ -5,6 +5,7 @@ on:
 
 jobs:
   run-stuff:
+    name: Run stuff
     runs-on: ubuntu-latest
     steps:
       - name: Wait for 60 seconds
