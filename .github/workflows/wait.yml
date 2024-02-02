@@ -15,6 +15,7 @@ jobs:
           running-workflow-name: "wait"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
+          check-name: "Hello World"
 
       - name: Yay
         run: echo "Hello World succeeded!"

@@ -8,8 +8,8 @@ jobs:
     name: Run stuff
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for 30 seconds
-        run: sleep 30
+      - name: Wait for 60 seconds
+        run: sleep 60
 
   hello-world:
     name: Hello World
@@ -26,3 +26,10 @@ jobs:
 
       - run: |
           python main.py
+
+  wait-long-time:
+    name: Long time
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 90 seconds
+        run: sleep 90
