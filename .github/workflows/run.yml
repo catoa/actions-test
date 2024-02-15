@@ -29,6 +29,7 @@ jobs:
 
   wait-long-time:
     name: Long time
+    if: ${{ github.ref_name == 'x' }}
     runs-on: ubuntu-latest
     steps:
       - name: Wait for 90 seconds
