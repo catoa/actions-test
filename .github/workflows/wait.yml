@@ -9,7 +9,7 @@ jobs:
     permissions: read-all
     steps:
       - name: Wait for tests to succeed
-        uses: lewagon/wait-on-check-action@v1.3.3
+        uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
           check-name: "Run stuff"
@@ -17,10 +17,10 @@ jobs:
           wait-interval: 10
 
       - name: Wait for tests to succeed
-        uses: lewagon/wait-on-check-action@v1.3.3
+        uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
-          check-name: "Hello World"
+          running-workflow-name: "Hello World"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
