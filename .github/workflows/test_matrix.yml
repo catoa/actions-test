@@ -5,6 +5,7 @@ on:
 
 env:
   MY_ENV_VAR: "secret"
+  TEST: ${{ "hello" == "world" }}
 
 jobs:
   test:
