@@ -20,13 +20,13 @@ jobs:
         run: echo "this"
 
   test2:
-    if: ${{ env.MY_ENV_VAR == 'secret' }}
+    if: ${{ $MY_ENV_VAR == 'secret' }}
     runs-on: ubuntu-latest
     concurrency: checkout-repo
     steps:
       - uses: actions/checkout@v4
   test3:
-    if: ${{ env.MY_ENV_VAR == 'secret' }}
+    if: ${{ $MY_ENV_VAR == 'secret' }}
     runs-on: ubuntu-latest
     concurrency: checkout-repo
     steps:
