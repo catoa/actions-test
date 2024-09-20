@@ -3,6 +3,9 @@ on:
     branches:
       - main
 
+env:
+  MY_ENV_VAR: "secret"
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -15,3 +18,16 @@ jobs:
         run: echo "Running tests on ${{ matrix.os }}"
       - name: Test this runs independent of the matrix
         run: echo "this"
+
+  test2:
+    if: ${{ env.MY_ENV_VAR == 'secret' }}
+    runs-on: ubuntu-latest
+    concurrency: checkout-repo
+    steps:
+      - uses: actions/checkout@v4
+  test3:
+    if: ${{ env.MY_ENV_VAR == 'secret' }}
+    runs-on: ubuntu-latest
+    concurrency: checkout-repo
+    steps:
+      - uses: actions/checkout@v4
