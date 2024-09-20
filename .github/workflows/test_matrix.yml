@@ -10,6 +10,8 @@ env:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    outputs:
+      test: ${{ github.ref_name == "main" }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
@@ -21,11 +23,14 @@ jobs:
         run: echo "this"
 
   test2:
+    needs: test
     if: ${{ github.ref_name == 'main' }}
     runs-on: ubuntu-latest
     concurrency: checkout-repo
     steps:
       - uses: actions/checkout@v4
+      - name: Run tests
+        run: echo "${{ needs.test.outputs.test }}"
   test3:
     if: ${{ github.ref_name == 'main' }}
     runs-on: ubuntu-latest
