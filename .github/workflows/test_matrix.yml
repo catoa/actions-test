@@ -23,18 +23,22 @@ jobs:
         with:
           ref: ${{ env.MY_ENV_VAR }}
 
-  test2:
-    needs: test
-    if: ${{ github.ref_name == 'main' }}
-    runs-on: ubuntu-latest
-    concurrency: checkout-repo
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run tests
-        run: echo "${{ needs.test.outputs.test }}"
   test3:
     if: ${{ github.ref_name == 'main' }}
     runs-on: ubuntu-latest
     concurrency: checkout-repo
+    outputs:
+      thishas-hyphen: ${{ steps.run.outputs.test-output }}
+
     steps:
       - uses: actions/checkout@v4
+      - name: Run tests
+        id: run
+        run: echo "test-output=helloworld" >> $GITHUB_OUTPUT
+
+  test4:
+    needs: test3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: echo "test-output=helloworld" >> $GITHUB_OUTPUT
