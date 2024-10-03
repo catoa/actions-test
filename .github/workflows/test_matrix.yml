@@ -29,11 +29,15 @@ jobs:
     concurrency: checkout-repo
     outputs:
       thishas-hyphen: ${{ steps.run.outputs.test-output }}
+      thishas-hyphen2: ${{ steps.run2.outputs.test-output }}
     steps:
       - uses: actions/checkout@v4
       - name: Run tests
         id: run
         run: echo "test-output=helloworld" >> $GITHUB_OUTPUT
+      - name: Run tests
+        id: run2
+        run: echo "test-output=foobar" >> $GITHUB_OUTPUT
 
   test4:
     needs: test3
