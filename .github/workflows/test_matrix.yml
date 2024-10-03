@@ -9,8 +9,6 @@ env:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-    outputs:
-      test: ${{ github.ref_name == "main" }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
