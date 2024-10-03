@@ -20,6 +20,10 @@ jobs:
         run: echo "Running tests on ${{ matrix.os }}"
       - name: Test this runs independent of the matrix
         run: echo "this"
+      - run: echo $MY_ENV_VAR
+      - uses: actions/checkout@v4
+        with:
+          ref: $MY_ENV_VAR
 
   test2:
     needs: test
