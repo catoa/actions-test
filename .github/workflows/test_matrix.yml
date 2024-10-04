@@ -16,7 +16,7 @@ jobs:
       - name: Test this runs independent of the matrix
         run: echo "this"
       - run: echo ${{ env.MY_ENV_VAR }}
-      - uses: actions/setup-python@5
+      - uses: actions/setup-python@4
         with:
           python-version: "3.12"
       - run: |
