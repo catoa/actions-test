@@ -1,4 +1,5 @@
-# write a basic cli program that prints "Hello, World!" to the console
-# when run.
+import os
+
+
 def main():
-    print("Hello, World!")
+    print(os.environ)
