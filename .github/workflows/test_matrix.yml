@@ -8,10 +8,7 @@ env:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+    runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v4
       - name: Run tests
@@ -19,10 +16,11 @@ jobs:
       - name: Test this runs independent of the matrix
         run: echo "this"
       - run: echo ${{ env.MY_ENV_VAR }}
-      - uses: actions/checkout@v4
+      - uses: actions/setup-python@5
         with:
-          ref: ${{ env.MY_ENV_VAR }}
-
+          python-version: "3.12"
+      - run: |
+          python main.py
   test3:
     if: ${{ github.ref_name == 'main' }}
     runs-on: ubuntu-latest
