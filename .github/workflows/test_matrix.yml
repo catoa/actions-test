@@ -24,7 +24,6 @@ jobs:
   test3:
     if: ${{ github.ref_name == 'main' }}
     runs-on: ubuntu-latest
-    concurrency: checkout-repo
     outputs:
       thishas-hyphen: ${{ steps.run.outputs.test-output }}
       thishas-hyphen2: ${{ steps.run2.outputs.test-output }}
