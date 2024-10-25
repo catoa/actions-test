@@ -39,6 +39,7 @@ jobs:
 
   test4:
     needs: test3
+    concurrency: checkout-repo
     runs-on: ubuntu-latest
     steps:
       - name: Run tests
