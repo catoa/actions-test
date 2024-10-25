@@ -37,11 +37,20 @@ jobs:
         id: run2
         run: echo "test-output=foobar" >> $GITHUB_OUTPUT
 
-  test4:
-    needs: test3
+  test5:
     concurrency: checkout-repo
     runs-on: ubuntu-latest
     steps:
+      - run: sleep 20
+      - name: Run tests
+        run: echo ${{ needs.test3.outputs.thishas-hyphen }}
+      - name: Run tests
+        run: echo ${{ needs.test3.outputs.thishas-hyphen2 }}
+  test4:
+    concurrency: checkout-repo
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 20
       - name: Run tests
         run: echo ${{ needs.test3.outputs.thishas-hyphen }}
       - name: Run tests
