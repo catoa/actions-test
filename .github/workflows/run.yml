@@ -92,8 +92,18 @@ jobs:
 
           # Get the latest release URL
           RELEASE_URL=$(curl -s https://api.github.com/repos/$REPO/releases/latest \
-            | grep "browser_download_url.*$ASSET_NAME" \
+            | grep "browser_download_url" \
+            | grep "$ASSET_NAME" \
             | cut -d '"' -f 4)
+
+          # Debug: Print the release URL
+          echo "Release URL: $RELEASE_URL"
+
+          # Check if URL is valid
+          if [ -z "$RELEASE_URL" ]; then
+            echo "Error: Failed to fetch the latest release URL for $ASSET_NAME"
+            exit 1
+          fi
 
           # Download the asset
           curl -L -o sqlcmd.tar.gz "$RELEASE_URL"
@@ -105,7 +115,3 @@ jobs:
           # Move the binary to a directory in PATH
           sudo mv sqlcmd/sqlcmd /usr/local/bin/sqlcmd
           sudo chmod +x /usr/local/bin/sqlcmd
-
-      - name: Verify sqlcmd installation
-        run: |
-          sqlcmd --help
