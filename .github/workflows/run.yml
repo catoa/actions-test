@@ -84,20 +84,31 @@ jobs:
     name: "install go sqlcmd with go"
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.20 # Specify your Go version
-
-      - name: Install go-sqlcmd
+      - name: Download latest sqlcmd release
         run: |
-          curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
-          add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/20.04/prod.list)"
-          apt-get update
-          apt-get install sqlcmd
-          sqlcmd --version
-          # go install github.com/microsoft/go-sqlcmd/cmd/sqlcmd@latest
-          # echo "PATH=$PATH:$(go env GOPATH)/bin" >> $GITHUB_ENV
+          # Set variables
+          REPO="microsoft/go-sqlcmd"
+          ASSET_NAME="sqlcmd-linux-x64.tar.gz"
 
-      - name: Verify installation
-        run: go-sqlcmd --help
+          # Get the latest release URL
+          RELEASE_URL=$(curl -s https://api.github.com/repos/$REPO/releases/latest \
+            | grep "browser_download_url.*$ASSET_NAME" \
+            | cut -d '"' -f 4)
+
+          # Download the asset
+          curl -L -o sqlcmd.tar.gz "$RELEASE_URL"
+
+          # Extract the asset
+          mkdir sqlcmd
+          tar -xvzf sqlcmd.tar.gz -C sqlcmd
+
+          # Move the binary to a directory in PATH
+          sudo mv sqlcmd/sqlcmd /usr/local/bin/sqlcmd
+          sudo chmod +x /usr/local/bin/sqlcmd
+
+      - name: Verify sqlcmd installation
+        run: |
+          sqlcmd --help - name: Set up Go
+          uses: actions/setup-go@v4
+          with:
+            go-version: 1.20 # Specify your Go version
