@@ -56,3 +56,22 @@ jobs:
         run: echo ${{ needs.test3.outputs.thishas-hyphen }}
       - name: Run tests
         run: echo ${{ needs.test3.outputs.thishas-hyphen2 }}
+  test9:
+    name: "install go sqlcmd"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+      - name: Install sqlcmd
+        run: |
+          curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+          sudo apt-get update
+          sudo apt-get install mssql-tools unixodbc-dev
+          echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+          echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+          source ~/.bashrc
+          source ~/.bash_profile
+          sqlcmd -?
