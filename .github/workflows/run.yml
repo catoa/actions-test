@@ -115,3 +115,47 @@ jobs:
           # Move the binary to a directory in PATH
           sudo mv sqlcmd/sqlcmd /usr/local/bin/sqlcmd
           sudo chmod +x /usr/local/bin/sqlcmd
+  test11:
+    name: "install go sqlcmd from latest release"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download latest sqlcmd release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Set variables
+          REPO="microsoft/go-sqlcmd"
+          ASSET_NAME="sqlcmd-linux-x64.tar.gz"
+
+          # Fetch the latest release JSON
+          RELEASE_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPO/releases/latest)
+
+          # Debug: Print release JSON to verify
+          echo "Release JSON: $RELEASE_JSON"
+
+          # Extract the browser download URL for the asset
+          RELEASE_URL=$(echo "$RELEASE_JSON" | grep -oP '"browser_download_url":\s*"\K[^"]+' | grep "$ASSET_NAME")
+
+          # Debug: Print the release URL
+          echo "Release URL: $RELEASE_URL"
+
+          # Check if URL is valid
+          if [ -z "$RELEASE_URL" ]; then
+            echo "Error: Failed to fetch the latest release URL for $ASSET_NAME"
+            exit 1
+          fi
+
+          # Download the asset
+          curl -L -o sqlcmd.tar.gz "$RELEASE_URL"
+
+          # Extract the asset
+          mkdir sqlcmd
+          tar -xvzf sqlcmd.tar.gz -C sqlcmd
+
+          # Move the binary to a directory in PATH
+          sudo mv sqlcmd/sqlcmd /usr/local/bin/sqlcmd
+          sudo chmod +x /usr/local/bin/sqlcmd
+
+      - name: Verify sqlcmd installation
+        run: |
+          sqlcmd --help
