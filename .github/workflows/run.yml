@@ -77,4 +77,6 @@ jobs:
           sqlcmd -?
       - name: Check sqlcmd
         run: |
+          source ~/.bashrc
+          source ~/.bash_profile
           sqlcmd -?
