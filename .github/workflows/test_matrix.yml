@@ -80,5 +80,3 @@ jobs:
         run: echo ${{ needs.test3.outputs.thishas-hyphen }}
       - name: Run tests
         run: echo ${{ needs.test3.outputs.thishas-hyphen2 }}
-  test5:
-    runs-on: ubuntu-latest
