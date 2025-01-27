@@ -91,7 +91,7 @@ jobs:
 
       - name: Install go-sqlcmd
         run: |
-          go install github.com/microsoft/go-sqlcmd/...@latest
+          go install github.com/microsoft/go-sqlcmd/cmd/sqlcmd@latest
           echo "PATH=$PATH:$(go env GOPATH)/bin" >> $GITHUB_ENV
 
       - name: Verify installation
