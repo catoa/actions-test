@@ -60,10 +60,10 @@ jobs:
     name: "install go sqlcmd"
     runs-on: ubuntu-latest
     steps:
-      - name: Install go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.23
+      # - name: Install go
+      #   uses: actions/setup-go@v5
+      #   with:
+      #     go-version: 1.23
       - name: Install sqlcmd
         run: |
           curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
@@ -74,4 +74,6 @@ jobs:
           echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
           source ~/.bashrc
           source ~/.bash_profile
+      - name: Check sqlcmd
+        run: |
           sqlcmd -?
