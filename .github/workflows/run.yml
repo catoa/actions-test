@@ -114,7 +114,6 @@ jobs:
 
           # Move the binary to a directory in PATH
           sudo mv sqlcmd/sqlcmd /usr/local/bin/sqlcmd
-          sudo chmod +x /usr/local/bin/sqlcmd
   test11:
     name: "install go sqlcmd from latest release"
     runs-on: ubuntu-latest
@@ -127,14 +126,14 @@ jobs:
           REPO="microsoft/go-sqlcmd"
           ASSET_NAME="sqlcmd-linux-x64.tar.gz"
 
-          # Fetch the latest release JSON
+          # Fetch the latest release JSON (array of assets)
           RELEASE_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPO/releases/latest)
 
-          # Debug: Print release JSON to verify
-          echo "Release JSON: $RELEASE_JSON"
+          # Debug: Print release JSON to verify structure
+          echo "$RELEASE_JSON" | jq .
 
-          # Extract the browser download URL for the asset
-          RELEASE_URL=$(echo "$RELEASE_JSON" | grep -oP '"browser_download_url":\s*"\K[^"]+' | grep "$ASSET_NAME")
+          # Extract the browser download URL for the specific asset
+          RELEASE_URL=$(echo "$RELEASE_JSON" | jq -r ".assets[] | select(.name == \"$ASSET_NAME\") | .browser_download_url")
 
           # Debug: Print the release URL
           echo "Release URL: $RELEASE_URL"
