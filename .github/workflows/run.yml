@@ -34,17 +34,17 @@ jobs:
     steps:
       - name: Wait for 90 seconds
         run: sleep 90
-  test5:
-    concurrency:
-      group: checkout-repo
-      cancel-in-progress: false
-    runs-on: ubuntu-latest
-    steps:
-      - run: sleep 20
-      - name: Run tests
-        run: echo ${{ needs.test3.outputs.thishas-hyphen }}
-      - name: Run tests
-        run: echo ${{ needs.test3.outputs.thishas-hyphen2 }}
+  # test5:
+  #   concurrency:
+  #     group: checkout-repo
+  #     cancel-in-progress: false
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: sleep 20
+  #     - name: Run tests
+  #       run: echo ${{ needs.test3.outputs.thishas-hyphen }}
+  #     - name: Run tests
+  #       run: echo ${{ needs.test3.outputs.thishas-hyphen2 }}
   test4:
     concurrency:
       group: checkout-repo
@@ -74,6 +74,7 @@ jobs:
           echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
           source ~/.bashrc
           source ~/.bash_profile
+          sqlcmd -?
       - name: Check sqlcmd
         run: |
           sqlcmd -?
